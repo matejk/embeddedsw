@@ -9,10 +9,10 @@
 #define code
 
 #include "te_iic_platform.h"
+
 #ifdef CLOCK_SI5338
 
-
-// #define SI5338_CHIP_ADDR		0x70
+#define SI5338_CHIP_ADDR		0x70
 
 #define TEST_REG_ADDR			0x00
 

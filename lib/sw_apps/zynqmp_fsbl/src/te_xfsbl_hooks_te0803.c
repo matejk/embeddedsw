@@ -176,17 +176,17 @@ u32 TE_XFsbl_HookBeforeFallback_Custom(void)
      goto END;
   }
   // change I2C switch to get access to SI5345
-  xil_printf("Configure Carrier I2C Switch 0x77\r\n");
-  Status = iic_write8(0x77, 0x00,  0x10);    // Configure I2C Switch
+  xil_printf("Configure Carrier I2C Switch @ 0x73, port 2\r\n");
+  Status = iic_write8(0x73, 0x00, (0x1 << 2));    // Configure I2C Switch
   if (Status != XFSBL_SUCCESS) {
-     xil_printf("Error: Configure TEBF0808 I2C Switch 0x77 for TE0803 SI5338 access\r\n");
+     xil_printf("Error: Configure TEBF0808 I2C Switch 0x73, port 2 for TE0803 SI5338 access\r\n");
      goto END;
   }
   
-  xil_printf("Configure TE0808 SI5338\r\n");
-  Status = si5338_init(0x70);                      // Configure clocks
+  xil_printf("Configure TE0808 SI5338 @ 0x%x\r\n", SI5338_CHIP_ADDR);
+  Status = si5338_init(SI5338_CHIP_ADDR);   // Configure clocks
   if (Status != XFSBL_SUCCESS) {
-     xil_printf("Error: Configure Si5338 CLK\r\n");
+     xil_printf("Error: Configure Si5338 CLK @ 0x%x\r\n", SI5338_CHIP_ADDR);
      goto END;
   }
   // ------------------------------------------------------
@@ -332,22 +332,29 @@ u32 TE_XFsbl_BoardInit_Custom(void)
   if (temp!=0x1) {
     xil_printf("PCIe is hold into reset. (GPIO_DATA_1, Val:%x)\r\n", RegVal);
   }
+
   //check serdes(gtr)
+#if 0
+  // GT 0 is not connected on DAQ1122.
   RegVal = Xil_In32(0xFD4023E4);
   temp = ((RegVal) & (0x0030))>>4;
   if(temp!=0x3) {
     xil_printf("GTR Lane0 LOCK Status failed. (Reg:0xFD4023E4,Val:0x%x)\r\n", RegVal);
   }
+#endif
   RegVal = Xil_In32(0xFD4063E4);
   temp = ((RegVal) & (0x0030))>>4;
   if(temp!=0x3) {
     xil_printf("GTR Lane1 LOCK Status failed. (Reg:0xFD4063E4,Val:0x%x)\r\n", RegVal);
   }
+#if 0
+  // GT 2 is not connected on DAQ1122.
   RegVal = Xil_In32(0xFD40A3E4);
   temp = ((RegVal) & (0x0030))>>4;
   if(temp!=0x3) {
     xil_printf("GTR Lane2 LOCK Status failed. (Reg:0xFD40A3E4,Val:0x%x)\r\n", RegVal);
   }
+#endif
   RegVal = Xil_In32(0xFD40E3E4);
   temp = ((RegVal) & (0x0030))>>4;
   if(temp!=0x3) {
