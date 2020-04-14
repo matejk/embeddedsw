@@ -34,7 +34,13 @@ proc swapp_get_description {} {
     return "First Stage Bootloader (FSBL) for Zynq Ultrascale+ MPSoC. The FSBL configures the FPGA with HW bit stream (if it exists) \
 	and loads the Operating System (OS) Image or Standalone (SA) Image or 2nd Stage Boot Loader image from the \
 	non-volatile memory (NAND/SD/QSPI) to RAM (DDR) and takes A53/R5 out of reset.  It supports multiple partitions, \
-	and each partition can be a code image or a bit stream.";
+	and each partition can be a code image or a bit stream. \n\n\
+    Modified Files: xfsbl_main.c, xfsbl_hooks.h/.c, xfsbl_board.h/.c(search for 'TE Mod' on source code) \n\
+    Add Files:  te_xfsbl_hooks.h/.c (for hooks and board)\n\
+    General Changes:  Display FSBL Banner and Device Name \n\
+    Add TE_Custom Files:  te_xfsbl_hooks_te0xxxx.h/.c (module specific changes <-> no changes if not included)\n\
+    Template: SDK 2018.3\n\
+  ";
 }
 
 proc swapp_get_supported_processors {} {

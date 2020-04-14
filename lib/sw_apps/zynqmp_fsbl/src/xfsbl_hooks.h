@@ -55,7 +55,9 @@ extern "C" {
 /***************************** Include Files *********************************/
 #include "xil_types.h"
 #include "xfsbl_hw.h"
-
+/* TE Mod:*/
+#include "te_xfsbl_hooks.h"
+/* TE Mod: finished*/
 /************************** Constant Definitions *****************************/
 
 /**************************** Type Definitions *******************************/

@@ -781,6 +781,10 @@ static void XFsbl_PcieReset(void)
 u32 XFsbl_BoardInit(void)
 {
 	u32 Status;
+  
+/* TE Mod:*/  
+  Status = TE_XFsbl_BoardInit();
+/* TE Mod: finished*/
 #if defined(XPS_BOARD_ZCU102) || defined(XPS_BOARD_ZCU106)		\
 		|| defined(XPS_BOARD_ZCU104) || defined(XPS_BOARD_ZCU111)
 	/* Program I2C to configure GT lanes */

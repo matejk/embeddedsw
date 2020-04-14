@@ -360,12 +360,23 @@ void XFsbl_PrintFsblBanner(void )
 	 */
 #if !defined(XFSBL_PERF) || defined(FSBL_DEBUG) || defined(FSBL_DEBUG_INFO) \
 			|| defined(FSBL_DEBUG_DETAILED)
+  // TE Mod : 
 	XFsbl_Printf(DEBUG_PRINT_ALWAYS,
-                 "Xilinx Zynq MP First Stage Boot Loader \n\r");
+                 "\r\n--------------------------------------------------------------------------------\r\n");  
+	XFsbl_Printf(DEBUG_PRINT_ALWAYS,
+                 "Xilinx Zynq MP First Stage Boot Loader (TE modified) \n\r");
 	XFsbl_Printf(DEBUG_PRINT_ALWAYS,
                  "Release %d.%d   %s  -  %s\r\n",
                  SDK_RELEASE_YEAR, SDK_RELEASE_QUARTER,__DATE__,__TIME__);
-
+                 
+	/* Build Device name and print it */
+  char DevName[20U];
+	(void)XFsbl_Strcpy(DevName, "XCZU");
+	(void)XFsbl_Strcat(DevName, XFsbl_GetSiliconIdName());
+	(void)XFsbl_Strcat(DevName, XFsbl_GetProcEng());
+	XFsbl_Printf(DEBUG_PRINT_ALWAYS, "Device Name: %s\n\r", DevName);  
+                 
+// TE Mod finished
 	if(FsblInstance.ResetReason == XFSBL_PS_ONLY_RESET) {
 		XFsbl_Printf(DEBUG_GENERAL,"Reset Mode	:	PS Only Reset\r\n");
 	}

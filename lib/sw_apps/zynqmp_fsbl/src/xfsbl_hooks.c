@@ -68,8 +68,9 @@ u32 XFsbl_HookBeforeBSDownload(void )
 	/**
 	 * Add the code here
 	 */
-
-
+/* TE Mod:*/
+  Status = TE_XFsbl_HookBeforeBSDownload();
+/* TE Mod: finished*/
 	return Status;
 }
 
@@ -81,7 +82,9 @@ u32 XFsbl_HookAfterBSDownload(void )
 	/**
 	 * Add the code here
 	 */
-
+/* TE Mod:*/
+  Status = TE_XFsbl_HookAfterBSDownload();
+/* TE Mod: finished*/
 	return Status;
 }
 #endif
@@ -93,7 +96,9 @@ u32 XFsbl_HookBeforeHandoff(u32 EarlyHandoff)
 	/**
 	 * Add the code here
 	 */
-
+/* TE Mod:*/
+  Status = TE_XFsbl_HookBeforeHandoff(EarlyHandoff); 
+/* TE Mod: finished*/
 	return Status;
 }
 
@@ -115,7 +120,9 @@ u32 XFsbl_HookBeforeFallback(void)
 	/**
 	 * Add the code here
 	 */
-
+/* TE Mod:*/
+  Status = TE_XFsbl_HookBeforeFallback(); 
+/* TE Mod: finished*/
 	return Status;
 }
 
@@ -140,20 +147,27 @@ u32 XFsbl_HookPsuInit(void)
 #endif
 
 	/* Add the code here */
+/* TE Mod:*/
+  Status = TE_XFsbl_HookPsuInit(); 
+  if (Status != XFSBL_SUCCESS) {
+     xil_printf("Error: TE_XFsbl_HookPsuInit failed\r\n");
+     goto END;
+  }
 
-#ifdef XFSBL_ENABLE_DDR_SR
-	/* Check if DDR is in self refresh mode */
-	RegVal = Xil_In32(XFSBL_DDR_STATUS_REGISTER_OFFSET) &
-		DDR_STATUS_FLAG_MASK;
-	if (RegVal) {
-		Status = (u32)psu_init_ddr_self_refresh();
-	} else {
-		Status = (u32)psu_init();
-	}
-#else
-	Status = (u32)psu_init();
-#endif
-
+// #ifdef XFSBL_ENABLE_DDR_SR
+	// /* Check if DDR is in self refresh mode */
+	// RegVal = Xil_In32(XFSBL_DDR_STATUS_REGISTER_OFFSET) &
+		// DDR_STATUS_FLAG_MASK;
+	// if (RegVal) {
+		// Status = (u32)psu_init_ddr_self_refresh();
+	// } else {
+		// Status = (u32)psu_init();
+	// }
+// #else
+	// Status = (u32)psu_init();
+// #endif
+  END:
+/* TE Mod: finished*/
 	if (XFSBL_SUCCESS != Status) {
 			XFsbl_Printf(DEBUG_GENERAL,"XFSBL_PSU_INIT_FAILED\n\r");
 			/**

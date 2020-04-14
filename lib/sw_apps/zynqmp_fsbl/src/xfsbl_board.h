@@ -59,6 +59,10 @@ extern "C" {
 
 /***************************** Include Files *********************************/
 #include "xfsbl_hw.h"
+/* TE Mod:*/
+#include "te_xfsbl_hooks.h"
+/* TE Mod: finished*/
+
 #if defined(XPS_BOARD_ZCU102) || defined(XPS_BOARD_ZCU106)		\
 		|| defined(XPS_BOARD_ZCU104) || defined(XPS_BOARD_ZCU111)
 #include "xiicps.h"
